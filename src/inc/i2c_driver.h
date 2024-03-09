@@ -31,6 +31,7 @@
 //  All include files that are provided by the compiler directly
 #include <stdbool.h>                            //!< Include to use standard boolean
 #include <stdint.h>                             //!< Include to use integer types
+#include <stdio.h>
 
 // ProjectIncludes
 // All include files that are provided by the project
