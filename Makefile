@@ -12,6 +12,7 @@ TEST_BIN_DIR = $(BUILD_DIR)/test_bin
 
 # Toolchain
 CC = gcc
+CC_test = gcc -DUNITTEST
 DEBUG = gdb
 
 # Files
@@ -23,6 +24,7 @@ OBJECTS = $(patsubst $(SRC_DIR)/%.c,$(OBJ_DIR)/%.o,$(SOURCE))
 UTTARGET = $(TEST_BIN_DIR)/unittest
 TEST_SOURCE = $(wildcard $(TEST_DIR)/*.c)
 UT_TEST_SOURCE = $(wildcard $(UT_DIR)/*.c)
+TEST_SRC_OBJECTS = $(patsubst $(SRC_DIR)/%.c,$(TEST_OBJ_DIR)/%.o,$(filter-out $(SRC_DIR)/main.c, $(SOURCE)))
 TEST_OBJECTS = $(patsubst $(TEST_DIR)/%.c,$(TEST_OBJ_DIR)/%.o,$(TEST_SOURCE))
 UT_TEST_OBJECTS = $(patsubst $(UT_DIR)/%.c,$(TEST_OBJ_DIR)/%.o,$(UT_TEST_SOURCE))
 
@@ -37,9 +39,10 @@ $(TARGET): $(OBJECTS)
 	@mkdir -p $(BIN_DIR)
 	$(CC) $^ -o $@
 
-$(UTTARGET): $(filter-out $(OBJ_DIR)/main.o, $(OBJECTS)) $(TEST_OBJECTS) $(UT_TEST_OBJECTS) 
+# $(UTTARGET): $(filter-out $(OBJ_DIR)/main.o, $(OBJECTS)) $(TEST_OBJECTS) $(UT_TEST_OBJECTS) 
+$(UTTARGET): $(TEST_OBJECTS) $(UT_TEST_OBJECTS) $(TEST_SRC_OBJECTS)
 	@mkdir -p $(TEST_BIN_DIR)
-	$(CC) $^ -o $(UTTARGET)
+	$(CC_test) $^ -o $(UTTARGET)
 
 #- Compiling
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
@@ -48,11 +51,15 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 
 $(TEST_OBJ_DIR)/%.o: $(TEST_DIR)/%.c
 	@mkdir -p $(TEST_OBJ_DIR)
-	$(CC) -c $(CFLAGS) $(UTFLAGS) $^ -o $@
+	$(CC_test) $(CFLAGS) $(UTFLAGS) -c $^ -o $@
+
+$(TEST_OBJ_DIR)/%.o: $(filter-out $(SRC_DIR)/main.c, $(SRC_DIR))/%.c
+	@mkdir -p $(TEST_OBJ_DIR)
+	$(CC_test) $(CFLAGS) $(UTFLAGS) -c $^ -o $@
 
 $(TEST_OBJ_DIR)/%.o: $(UT_DIR)/%.c
 	@mkdir -p $(TEST_OBJ_DIR)
-	$(CC) -c $(CFLAGS) $(UTFLAGS) $^ -o $@
+	$(CC_test) $(CFLAGS) $(UTFLAGS) -c $^ -o $@
 
 
 .PHONY: all clean test run
