@@ -1,7 +1,11 @@
 #ifndef INC_ACCEL_DRIVER_H_
 #define INC_ACCEL_DRIVER_H_
 
+#include <stdint.h>
+#include <stddef.h>
+
 #include "FunctionStatus.h"
+#include "i2c_driver.h"
 
 // Addresses and registers
 #define ADXL343_REG_BW_RATE 0x2C                // Controls devices data rates and power mode
@@ -22,13 +26,22 @@
 #define ADXL343_DEFAULT_RANGE 0x00              // +-2g range
 #define ADXL343_DEFAULT_RESOLUTION 0x00         // 10-bit (auto adjusting scale factor)
 #define ADXL343_DEFAULT_RATE 0x0A               // 100 Hz
+#define ADXL343_DEFAULT_TIMEOUT 200             // time in ms, should rather scale with F_CPU
 
 // Functions
 FunctionStatus adxl343_init();
-FunctionStatus adxl343_set_rate();
-FunctionStatus adxl343_set_resolution();
-FunctionStatus adxl343_set_range();
-FunctionStatus adx1343_read();
-FunctionStatus adxl343_write();
+FunctionStatus adxl343_set_rate(uint8_t);
+FunctionStatus adxl343_set_range(uint8_t);
+FunctionStatus adxl343_set_resolution_fixed();
+FunctionStatus adxl343_set_resolution_full();
+FunctionStatus adxl343_set_bit_order(uint8_t);
+FunctionStatus adxl343_get_X_axis();
+FunctionStatus adxl343_get_Y_axis();
+FunctionStatus adxl343_get_Z_axis();
+FunctionStatus adxl343_get_all_axes();
+
+// TODO: decide on static nature
+// FunctionStatus _adx1343_read();
+// FunctionStatus _adxl343_write();
 
 #endif /* INC_ACCEL_DRIVER_H_ */

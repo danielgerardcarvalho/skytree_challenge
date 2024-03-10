@@ -11,6 +11,7 @@
 - double check linking and add comments where needed
 - error handling routines if not already done.
 
+\
 **Assumptions:**
 - General wiring and connections of micro and ADXL343. Specific hardware pins related to the 
     configuration of I2C and reading/writing are mentioned in more detail below.
@@ -24,3 +25,13 @@
         - I2C address - 0x53
         - Read - 0xA7
         - Write - 0xA6
+    - i2c_write and i2c_read functions handle ack replies from the device.
+
+
+\
+**Requirements/Dependencies:**
+- Makefile
+    - configured for gcc
+    - configured for gdb
+    - configured for Unity (unittesting) \
+        https://github.com/ThrowTheSwitch/Unity
