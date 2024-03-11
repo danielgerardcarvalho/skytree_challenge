@@ -39,7 +39,6 @@ $(TARGET): $(OBJECTS)
 	@mkdir -p $(BIN_DIR)
 	$(CC) $^ -o $@
 
-# $(UTTARGET): $(filter-out $(OBJ_DIR)/main.o, $(OBJECTS)) $(TEST_OBJECTS) $(UT_TEST_OBJECTS) 
 $(UTTARGET): $(TEST_OBJECTS) $(UT_TEST_OBJECTS) $(TEST_SRC_OBJECTS)
 	@mkdir -p $(TEST_BIN_DIR)
 	$(CC_test) $^ -o $(UTTARGET)
