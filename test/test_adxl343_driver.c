@@ -29,15 +29,6 @@ FunctionStatus mock_i2c_read(char* dataToRead, size_t length, uint32_t timeout) 
 void setUp(void){}
 
 // Test cases
-void test_testing_temp(){
-    // TODO: remove when dev is completed
-    adxl343_init();
-    adxl343_set_range(0b10);
-
-    adxl343_get_settings();
-    // TEST_ASSERT_EQUAL(0xE, return_val);
-}
-
 void test_adxl343_init_noerror(){
     FunctionStatus result = adxl343_init();
     ADXL343Settings settings = adxl343_get_settings();
