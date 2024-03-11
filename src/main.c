@@ -1,15 +1,26 @@
+// --------------------------------------------------------------------------------------------------------------------
+/// \file  main.c
+/// \brief Description
+// --------------------------------------------------------------------------------------------------------------------
+
+#include "FunctionStatus.h"
+#include "adxl343_driver.h"
+
 int main(){
-    /* Configuring i2c */
-    // - nothing here really
-    // - maybe do some stuff I guess
+    // Configuring micro
+    // - just imagine
+    // Configuring i2c
+    // - pretend its just majestic things here as well
     
-    /* TODO: Initialise Accelerometer */
-    // - initialise accel object - probably a struct or something
-    // - call initialisation
+    // Initialise Accelerometer
+    if (adxl343_init() != FUNCTION_STATUS_OK){
+        // Sad :(
+    }
     
-    /* TODO: Using the Accelerometer */
-    // - change some settings
-    // - make a read
+    // Using the Accelerometer
+    adxl343_set_resolution_full();
+    adxl343_set_bit_order(0x01);
+    adxl343_start();
     
     return 0;
 }
